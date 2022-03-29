@@ -26,8 +26,8 @@ class CartItemViews(APIView):
             item = CartItem.objects.get(id=id)
             serializer = CartItemSerializer(item)
             json_data = JSONRenderer().render(serializer.data)
-            return HttpResponse(json_data, content_type = 'application/json')
-            # return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+            # return HttpResponse(json_data, content_type = 'application/json')
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
 
         items = CartItem.objects.all()
         serializer = CartItemSerializer(items, many=True)
