@@ -5,13 +5,22 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from django.shortcuts import render, get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.core.paginator import Paginator
 
 # Create your views here.
-from rest_framework.views import APIView
 
 
-
-
+@permission_classes([IsAuthenticated])
+class CartItemList (ListAPIView):
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemSerializer
+    
+    
+@permission_classes([IsAuthenticated])
 class CartItemViews(APIView):
     def post(self, request):
         serializer = CartItemSerializer(data=request.data)
@@ -46,5 +55,7 @@ class CartItemViews(APIView):
         item =get_object_or_404(CartItem, id=id)
         item.delete()
         return Response({"status": "success", "data":"item deleted"})
+    
+    
         
             

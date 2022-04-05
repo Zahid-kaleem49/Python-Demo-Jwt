@@ -7,7 +7,7 @@ from datetime import datetime,timezone
 
 class SoftDeleteManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_deleted=True)
+        return super().get_queryset().filter(is_deleted=False)
     
 
 class SoftDeleteModel(models.Model):
@@ -35,3 +35,6 @@ class CartItem(SoftDeleteModel):
     product_name = models.CharField(max_length=200)
     product_price = models.FloatField()
     product_quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.product_name
