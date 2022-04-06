@@ -13,8 +13,8 @@ class SoftDeleteManager(models.Manager):
 class SoftDeleteModel(models.Model):
     is_deleted = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(null=True, default=None)
-    objects = SoftDeleteManager()
-    all_objects = models.Manager()
+    soft_objects = SoftDeleteManager()
+    objects = models.Manager()
     
     def soft_delete(self):
         self.is_deleted = True
